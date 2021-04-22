@@ -113,8 +113,10 @@ function process_anchor_rss_feed() {
     check_run_cmd "curl -o $tmp_old_rss ${ANCHOR_RSS_FEED_URL}"
     check_run_cmd "xsltproc transform.xsl $tmp_old_rss > $tmp_new_rss"
     check_run_cmd "aws s3 cp $tmp_new_rss ${AWS_S3_RSS_URL} --acl public-read"
+    # Need to remember to escape the asterisk in the path 
+    #  https://kylewbanks.com/blog/invalidate-entire-cloudfront-distribution-from-command-line
     if [[ -n "${CF_DISTRIBUTION_ID}" ]]; then
-        check_run_cmd "aws cloudfront create-invalidation --distribution-id ${CF_DISTRIBUTION_ID} --paths "/*.xml""
+        check_run_cmd "aws cloudfront create-invalidation --distribution-id ${CF_DISTRIBUTION_ID} --paths "/\\*.xml" "
     fi
 }
 

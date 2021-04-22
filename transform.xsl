@@ -34,18 +34,19 @@
         <xsl:copy>
             <xsl:attribute name="url">
                 <xsl:text>https://dts.podtrac.com/redirect.m4a/</xsl:text>
-                <!-- There is a bug in the way podtrac redirects the anchor.fm
+                <xsl:value-of select="substring-after(@url, 'https://')"/>
+                <!-- There used to be a bug in the way podtrac redirects the anchor.fm
                      URL.  It does the URL encoding translation incorrectly and
                      so the URL it redirects to doesn't work.  We need to change
                      the https%3A%2F%2F in the anchor URL to https:// which is
-                     only a problem with podtrac/anchor.  podtrac is aware of the
-                     issue but they don't support anchor so this is something
-                     they never fixed -->
+                     only a problem with podtrac/anchor.  It seems like podtrac
+                     has fixed this issue but I'll leave this code here in case
+                     it breaks again >
                 <xsl:call-template name="string-replace-all">
                     <xsl:with-param name="text" select="substring-after(@url, 'https://')"/>
                     <xsl:with-param name="replace" select="'%3A%2F%2F'"/>
                     <xsl:with-param name="by" select="'://'"/>
-                </xsl:call-template>
+                </xsl:call-template -->
             </xsl:attribute>
             <xsl:apply-templates select="@*[not(local-name()='url')]|node()"/>
         </xsl:copy>
