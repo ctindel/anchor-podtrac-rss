@@ -116,7 +116,7 @@ function process_anchor_rss_feed() {
     # Need to remember to escape the asterisk in the path 
     #  https://kylewbanks.com/blog/invalidate-entire-cloudfront-distribution-from-command-line
     if [[ -n "${CF_DISTRIBUTION_ID}" ]]; then
-        check_run_cmd "aws cloudfront create-invalidation --distribution-id ${CF_DISTRIBUTION_ID} --paths "/\\*.xml" "
+        check_run_cmd "aws cloudfront create-invalidation --distribution-id ${CF_DISTRIBUTION_ID} --paths "/anchor_podtrac_rss.xml" "
     fi
 }
 
